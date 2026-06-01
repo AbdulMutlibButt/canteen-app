@@ -28,10 +28,7 @@ export default function Header() {
         };
     }, [isMobileMenuOpen]);
 
-    // Close mobile menu on route change
-    useEffect(() => {
-        setIsMobileMenuOpen(false);
-    }, [pathname]);
+
 
     return (
         <>
@@ -56,9 +53,8 @@ export default function Header() {
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className={`text-sm font-semibold transition-colors relative py-2 ${
-                                        isActive ? "text-orange-600" : "text-slate-600 hover:text-slate-900"
-                                    } cursor-pointer`}
+                                    className={`text-sm font-semibold transition-colors relative py-2 ${isActive ? "text-orange-600" : "text-slate-600 hover:text-slate-900"
+                                        } cursor-pointer`}
                                 >
                                     {item.name}
                                     {isActive && (
@@ -78,7 +74,7 @@ export default function Header() {
                         <button className="hidden md:block bg-orange-600 hover:bg-orange-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer">
                             Login
                         </button>
-                        
+
                         {/* Hamburger Button */}
                         <button
                             onClick={() => setIsMobileMenuOpen(true)}
@@ -147,11 +143,11 @@ export default function Header() {
                                         >
                                             <Link
                                                 href={item.href}
-                                                className={`flex items-center px-4 py-3 rounded-xl text-sm font-semibold transition-all relative ${
-                                                    isActive
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className={`flex items-center px-4 py-3 rounded-xl text-sm font-semibold transition-all relative ${isActive
                                                         ? "text-orange-600 bg-orange-50/50"
                                                         : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                                                }`}
+                                                    }`}
                                             >
                                                 {item.name}
                                                 {isActive && (
@@ -167,7 +163,13 @@ export default function Header() {
                             <div className="p-6 border-t border-slate-100 bg-slate-50/50 flex flex-col gap-4">
                                 <div className="flex items-center justify-between text-xs text-slate-400 px-1 font-medium">
                                     <span>Need assistance?</span>
-                                    <Link href="/contact" className="text-orange-600 hover:underline">Support</Link>
+                                    <Link
+                                        href="/contact"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="text-orange-600 hover:underline"
+                                    >
+                                        Support
+                                    </Link>
                                 </div>
                                 <button className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer">
                                     Login
