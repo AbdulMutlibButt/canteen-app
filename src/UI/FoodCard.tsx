@@ -42,9 +42,9 @@ export default function FoodCard({ image, tag, rating, title, subtitle, price, o
                 {/* Pricing and Action Button */}
                 <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between gap-2">
                     <div className="flex flex-col">
-                        <span className="text-xl font-black text-slate-900">₹{price}</span>
+                        <span className="text-xl font-black text-slate-900">Rs. {price}</span>
                         {originalPrice && (
-                            <span className="text-xs line-through text-slate-400 font-medium">₹{originalPrice}</span>
+                            <span className="text-xs line-through text-slate-400 font-medium">Rs. {originalPrice}</span>
                         )}
                     </div>
 

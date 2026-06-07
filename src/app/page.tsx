@@ -5,6 +5,7 @@ import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import SectionHeading from "@/src/UI/SectionHeading";
 import FoodCard from "@/src/UI/FoodCard";
+import Link from "next/link";
 
 // Mock Data Source
 const featuredFoods = [
@@ -61,12 +62,12 @@ export default function Home() {
                 className="w-full px-4 py-3 text-slate-800 focus:outline-none placeholder-slate-400 font-medium text-sm"
               />
               <div className="flex w-full sm:w-auto gap-2">
-                <button className="whitespace-nowrap bg-slate-900 hover:bg-slate-800 text-white px-5 py-3 rounded-xl font-bold transition text-sm w-full sm:w-auto">
+                <Link href="/menu" className="whitespace-nowrap bg-slate-900 hover:bg-slate-800 text-white px-5 py-3 rounded-xl font-bold transition text-sm w-full sm:w-auto">
                   Order Now →
-                </button>
-                <button className="whitespace-nowrap bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-xl font-bold transition text-sm flex items-center justify-center gap-1 w-full sm:w-auto">
+                </Link>
+                <Link href="/ai-assistant" className="whitespace-nowrap bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-xl font-bold transition text-sm flex items-center justify-center gap-1 w-full sm:w-auto">
                   🤖 Ask Assistant
-                </button>
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -97,7 +98,7 @@ export default function Home() {
           badgeText="Campus Favorites"
           title="Featured Foods"
           subtitle="Most popular items on campus"
-          viewAllLink="#menu"
+          viewAllLink="/menu"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredFoods.map((food) => (

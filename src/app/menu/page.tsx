@@ -35,7 +35,7 @@ export default function MenuPage() {
 
     return (
         <div className="min-h-screen bg-[#FDFBF7] text-slate-800 flex flex-col font-sans">
-       
+
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
                 {/* Title Area */}
@@ -73,7 +73,7 @@ export default function MenuPage() {
                         <div className="space-y-2">
                             <div className="flex justify-between items-center">
                                 <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Price Range</label>
-                                <span className="text-sm font-bold text-slate-700">₹0 - ₹{maxPrice}</span>
+                                <span className="text-sm font-bold text-slate-700">Rs 0 -Rs. {maxPrice}</span>
                             </div>
                             <input
                                 type="range"
@@ -85,9 +85,9 @@ export default function MenuPage() {
                                 className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-orange-600 focus:outline-none"
                             />
                             <div className="flex justify-between text-[10px] font-bold text-slate-400 px-0.5">
-                                <span>₹0</span>
-                                <span>₹250</span>
-                                <span>₹500</span>
+                                <span>Rs 0</span>
+                                <span>Rs 250</span>
+                                <span>Rs 500</span>
                             </div>
                         </div>
                     </aside>

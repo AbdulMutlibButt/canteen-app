@@ -71,9 +71,9 @@ export default function Header() {
                             🛒
                             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-600 rounded-full" />
                         </button>
-                        <button className="hidden md:block bg-orange-600 hover:bg-orange-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer">
+                        <Link href="/login" className="hidden md:block bg-orange-600 hover:bg-orange-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer">
                             Login
-                        </button>
+                        </Link>
 
                         {/* Hamburger Button */}
                         <button
@@ -171,9 +171,13 @@ export default function Header() {
                                         Support
                                     </Link>
                                 </div>
-                                <button className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer">
+                                <Link
+                                    href="/login"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer text-center block"
+                                >
                                     Login
-                                </button>
+                                </Link>
                             </div>
                         </motion.div>
                     </>

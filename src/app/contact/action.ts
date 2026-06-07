@@ -2,7 +2,7 @@
 import { Resend } from "resend";
 import { FormState } from "./types";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend("re_B4H5Gfri_69zybqhFRAfx9J6ziZg1AWP7");
 
 export async function sendContactEmail(formData: FormData): Promise<FormState> {
   const name = formData.get("name") as string | null;
@@ -17,7 +17,7 @@ export async function sendContactEmail(formData: FormData): Promise<FormState> {
   try {
     const { error } = await resend.emails.send({
       from: "AI Smart Canteen <onboarding@resend.dev>",
-      to: ["support@aismartcanteen.edu"],
+      to: ["mutlibbutt209@gmail.com"],
       replyTo: email,
       subject: `New Contact Form: ${subject}`,
       html: `
