@@ -5,13 +5,13 @@ import { getFirestore, doc, getDoc, setDoc, serverTimestamp, collection, addDoc,
 import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAouGVVUkNI5OBJgumig4-kcFeEhV7_S20",
-  authDomain: "food-delivery-a4138.firebaseapp.com",
-  projectId: "food-delivery-a4138",
-  storageBucket: "food-delivery-a4138.firebasestorage.app",
-  messagingSenderId: "1074203409046",
-  appId: "1:1074203409046:web:2c3e69becc7fb58f1a60b7",
-  measurementId: "G-1QBHPRF2LD"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase only if it hasn't been initialized already
