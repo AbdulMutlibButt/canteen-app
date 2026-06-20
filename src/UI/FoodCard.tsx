@@ -1,8 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useCart } from "../context/CartContext";
 
-export default function FoodCard({ image, tag, rating, title, subtitle, price, originalPrice, discount, isCombo }: { image: string; tag: string; rating?: number; title: string; subtitle?: string; price: string; originalPrice?: string; discount?: string; isCombo: boolean }) {
+export default function FoodCard({ id, image, tag, rating, title, subtitle, price, originalPrice, discount, isCombo }: { id: number; image: string; tag: string; rating?: number; title: string; subtitle?: string; price: string; originalPrice?: string; discount?: string; isCombo: boolean }) {
+    const { addToCart } = useCart();
     return (
         <motion.div
             whileHover={{ y: -8 }}
@@ -42,16 +44,18 @@ export default function FoodCard({ image, tag, rating, title, subtitle, price, o
                 {/* Pricing and Action Button */}
                 <div className="mt-6 pt-4 border-t border-slate-50 flex items-center justify-between gap-2">
                     <div className="flex flex-col">
-                        <span className="text-xl font-black text-slate-900">Rs. {price}</span>
+                        <span className="text-xl font-black text-slate-900">Rs{price}</span>
                         {originalPrice && (
-                            <span className="text-xs line-through text-slate-400 font-medium">Rs. {originalPrice}</span>
+                            <span className="text-xs line-through text-slate-400 font-medium">Rs{originalPrice}</span>
                         )}
                     </div>
 
-                    <button className={`px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-sm ${isCombo
-                        ? 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white w-full text-center'
-                        : 'bg-orange-50 text-orange-600 hover:bg-orange-600 hover:text-white border border-orange-100'
-                        }`}>
+                    <button
+                        onClick={() => addToCart(id)}
+                        className={`px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-sm ${isCombo
+                            ? 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white w-full text-center'
+                            : 'bg-orange-50 text-orange-600 hover:bg-orange-600 hover:text-white border border-orange-100 cursor-pointer'
+                            }`}>
                         {isCombo ? 'Grab Deal' : 'Add to Cart'}
                     </button>
                 </div>

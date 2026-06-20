@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { loginWithEmail, signInWithGoogle } from "../../../../config/firebase";
+import { useRouter } from "next/navigation";
 
 type LoginFormValues = {
   email: string;
@@ -11,6 +13,8 @@ type LoginFormValues = {
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const {
     register,
@@ -18,8 +22,26 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>();
 
-  const onSubmit = (data: LoginFormValues) => {
-    console.log("Login form values:", data);
+  const onSubmit = async (data: LoginFormValues) => {
+    setLoginError(null);
+    try {
+      await loginWithEmail(data.email, data.password);
+      router.push("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+      setLoginError("Invalid email or password");
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setLoginError(null);
+    try {
+      await signInWithGoogle();
+      router.push("/");
+    } catch (error) {
+      console.error("Google sign-in failed:", error);
+      setLoginError(error instanceof Error ? error.message : "Failed to sign in with Google");
+    }
   };
 
   return (
@@ -52,6 +74,11 @@ export default function LoginPage() {
         className="bg-white rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/60 p-8"
       >
         <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
+          {loginError && (
+            <div className="bg-red-50 text-red-500 text-sm font-semibold p-3 rounded-xl flex items-center gap-2">
+              ⚠️ {loginError}
+            </div>
+          )}
 
           {/* Email Field */}
           <div className="space-y-1.5">
@@ -173,9 +200,10 @@ export default function LoginPage() {
           <div className="flex-1 h-px bg-slate-100" />
         </div>
 
-        {/* Social Sign-In (decorative) */}
+        {/* Social Sign-In */}
         <button
           type="button"
+          onClick={handleGoogleSignIn}
           className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-slate-300 transition text-sm font-semibold text-slate-700 cursor-pointer"
         >
           <svg className="w-4 h-4" viewBox="0 0 24 24">

@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth, logoutUser } from "../../config/firebase";
+import { useCart } from "../context/CartContext";
 
 const navItems = [
     { name: "Home", href: "/" },
@@ -15,6 +18,23 @@ const navItems = [
 export default function Header() {
     const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
+    const { totalItems } = useCart();
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    const handleLogout = async () => {
+        try {
+            await logoutUser();
+        } catch (error) {
+            console.error("Logout error", error);
+        }
+    };
 
     // Prevent body scroll when mobile menu is open
     useEffect(() => {
@@ -67,13 +87,28 @@ export default function Header() {
 
                     {/* Actions */}
                     <div className="flex items-center gap-4">
-                        <button className="p-2.5 hover:bg-slate-50 rounded-xl transition text-slate-600 relative">
+                        <Link href="/cart" className="p-2.5 hover:bg-slate-50 rounded-xl transition text-slate-600 relative cursor-pointer">
                             🛒
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-600 rounded-full" />
-                        </button>
-                        <Link href="/login" className="hidden md:block bg-orange-600 hover:bg-orange-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer">
-                            Login
+                            {totalItems > 0 && (
+                                <span className="absolute top-0 right-0 w-4 h-4 bg-orange-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                                    {totalItems}
+                                </span>
+                            )}
                         </Link>
+                        {user ? (
+                            <div className="hidden md:flex items-center gap-4">
+                                <span className="text-sm font-semibold text-slate-700 truncate max-w-[120px]">
+                                    {user.displayName || user.email?.split("@")[0] || "User"}
+                                </span>
+                                <button onClick={handleLogout} className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-6 py-2.5 rounded-xl transition shadow-sm text-sm cursor-pointer">
+                                    Logout
+                                </button>
+                            </div>
+                        ) : (
+                            <Link href="/login" className="hidden md:block bg-orange-600 hover:bg-orange-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer">
+                                Login
+                            </Link>
+                        )}
 
                         {/* Hamburger Button */}
                         <button
@@ -171,13 +206,30 @@ export default function Header() {
                                         Support
                                     </Link>
                                 </div>
-                                <Link
-                                    href="/login"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer text-center block"
-                                >
-                                    Login
-                                </Link>
+                                {user ? (
+                                    <div className="flex flex-col gap-3">
+                                        <div className="flex items-center justify-center bg-slate-100 py-2 rounded-xl text-sm font-semibold text-slate-700">
+                                            Hello, {user.displayName || user.email?.split("@")[0] || "User"}
+                                        </div>
+                                        <button
+                                            onClick={() => {
+                                                handleLogout();
+                                                setIsMobileMenuOpen(false);
+                                            }}
+                                            className="w-full bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-3 rounded-xl transition shadow-sm text-sm cursor-pointer text-center block"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <Link
+                                        href="/login"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded-xl transition shadow-md shadow-orange-600/10 text-sm cursor-pointer text-center block"
+                                    >
+                                        Login
+                                    </Link>
+                                )}
                             </div>
                         </motion.div>
                     </>

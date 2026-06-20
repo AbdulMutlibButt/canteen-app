@@ -4,17 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import FoodCard from "@/src/UI/FoodCard";
 
-const categories = ["All", "Burger", "Pizza", "Biryani", "Fast Food", "Drinks", "Snacks"];
-const menuItems = [
-    { id: 1, image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500", tag: "Burger", rating: 4.8, title: "Classic Beef Burger", subtitle: "Juicy beef patty with fresh vegetables", price: 299 },
-    { id: 2, image: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=500", tag: "Burger", rating: 4.9, title: "Double Cheese Burger", subtitle: "Two beef patties with extra cheese", price: 399 },
-    { id: 3, image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=500", tag: "Burger", rating: 4.7, title: "Chicken Burger", subtitle: "Crispy chicken with special sauce", price: 249 },
-    { id: 4, image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500", tag: "Pizza", rating: 4.9, title: "Supreme Pizza", subtitle: "Loaded with pepperoni, olives, and bell peppers", price: 449 },
-    { id: 5, image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=500", tag: "Pizza", rating: 4.8, title: "Cheese Burst Pizza", subtitle: "Overflowing gooey cheese mozzarella blend", price: 499 },
-    { id: 6, image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500", tag: "Pizza", rating: 4.6, title: "Thin Crust Veggie", subtitle: "Crisp crust with seasonal garden vegetables", price: 349 },
-    { id: 7, image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?q=80&w=500", tag: "Biryani", rating: 4.8, title: "Hyderabadi Biryani", subtitle: "Fragrant long-grain basmati rice with spices", price: 279 },
-    { id: 8, image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?q=80&w=500", tag: "Drinks", rating: 4.5, title: "Mango Smoothie", subtitle: "Fresh blended tropical sweet mangoes", price: 129 },
-];
+import { categories, menuItems } from "@/src/lib/data";
 export default function MenuPage() {
     // State management for working filters
     const [selectedCategory, setSelectedCategory] = useState("All");
@@ -73,7 +63,7 @@ export default function MenuPage() {
                         <div className="space-y-2">
                             <div className="flex justify-between items-center">
                                 <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Price Range</label>
-                                <span className="text-sm font-bold text-slate-700">Rs 0 -Rs. {maxPrice}</span>
+                                <span className="text-sm font-bold text-slate-700">Rs0 - Rs{maxPrice}</span>
                             </div>
                             <input
                                 type="range"
@@ -85,9 +75,9 @@ export default function MenuPage() {
                                 className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-orange-600 focus:outline-none"
                             />
                             <div className="flex justify-between text-[10px] font-bold text-slate-400 px-0.5">
-                                <span>Rs 0</span>
-                                <span>Rs 250</span>
-                                <span>Rs 500</span>
+                                <span>Rs0</span>
+                                <span>Rs250</span>
+                                <span>Rs500</span>
                             </div>
                         </div>
                     </aside>
@@ -125,7 +115,7 @@ export default function MenuPage() {
                                         exit={{ opacity: 0, scale: 0.9 }}
                                         transition={{ duration: 0.2 }}
                                     >
-                                        <FoodCard {...item} isCombo={false} price={item.price.toString()} />
+                                        <FoodCard {...item} id={item.id} isCombo={false} price={item.price.toString()} />
                                     </motion.div>
                                 ))}
                             </AnimatePresence>
